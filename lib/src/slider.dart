@@ -86,7 +86,7 @@ class _SliderButtonState extends State<SliderButton> {
     return flag == true
         ? _control()
         : widget.dismissible == true
-            ? onSlided?? Container()
+            ? widget.onSlided?? Container()
             : Container(
                 child: _control(),
               );
