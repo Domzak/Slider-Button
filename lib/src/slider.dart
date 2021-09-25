@@ -27,7 +27,7 @@ class SliderButton extends StatefulWidget {
   ///Gives a alignment to a slider icon.
   final Alignment alignLabel;
   final BoxShadow? boxShadow;
-  final Widget? icon;
+  final Widget? icon, onSlided;
   final Function? action;
 
   ///Make it false if you want to deactivate the shimmer effect.
@@ -55,6 +55,7 @@ class SliderButton extends StatefulWidget {
     this.height = 70,
     this.buttonSize,
     this.width = 250,
+    this.onSlided,
     this.alignLabel = const Alignment(0.4, 0),
     this.backgroundColor = const Color(0xffe0e0e0),
     this.baseColor = Colors.black87,
@@ -85,7 +86,7 @@ class _SliderButtonState extends State<SliderButton> {
     return flag == true
         ? _control()
         : widget.dismissible == true
-            ? Container()
+            ? onSlided?? Container()
             : Container(
                 child: _control(),
               );
@@ -98,6 +99,8 @@ class _SliderButtonState extends State<SliderButton> {
         alignment: Alignment.centerLeft,
         child: Stack(
           alignment: Alignment.centerLeft,
+              clipBehavior: Clip.hardEdge,
+
           children: <Widget>[
             Container(
               alignment: widget.alignLabel,
@@ -105,7 +108,7 @@ class _SliderButtonState extends State<SliderButton> {
                   ? Shimmer.fromColors(
                       baseColor: widget.disable ? Colors.grey : widget.baseColor,
                       highlightColor: widget.highlightedColor,
-                      child: widget.label ?? Text(''),
+                      child: widget.label ?? Text('Slide To confirm...'),
                     )
                   : widget.label,
             ),
